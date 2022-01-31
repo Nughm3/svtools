@@ -7,8 +7,8 @@ use std::{
 };
 use termion::color;
 
-const SVDIR: &'static str = include_str!("SVDIR");
-const RUNSVDIR: &'static str = include_str!("RUNSVDIR");
+const SVDIR: &str = "/etc/sv/";
+const RUNSVDIR: &str = "/var/service/";
 
 fn main() -> Result<()> {
     let args: Vec<String> = args().collect();
@@ -20,13 +20,7 @@ fn main() -> Result<()> {
 
     let mut errors = 0;
     for service in args.iter().skip(1) {
-<<<<<<< HEAD
-        let s1 = SV_DIR.to_owned() + service;
-||||||| 7b33e0c
-        let s1 = SV_DIR.to_owned() + &service;
-=======
         let s1 = SVDIR.to_owned() + service;
->>>>>>> faafbe17756e1a43485a5883be4c3364ec329aaf
         let svc = Path::new(&s1);
         let s2 = RUNSVDIR.to_owned() + service;
         let dest = Path::new(&s2);
