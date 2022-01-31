@@ -2,8 +2,16 @@ use color_eyre::eyre::Result;
 use std::{fs, process::Command, str::from_utf8};
 use termion::color;
 
+<<<<<<< HEAD
 const RUNSVDIR: &str = "/var/service/";
 const SV_DIR: &str = "/etc/sv/";
+||||||| 7b33e0c
+const RUNSVDIR: &'static str = "/var/service/";
+const SV_DIR: &'static str = "/etc/sv/";
+=======
+const SVDIR: &'static str = include_str!("SVDIR");
+const RUNSVDIR: &'static str = include_str!("RUNSVDIR");
+>>>>>>> faafbe17756e1a43485a5883be4c3364ec329aaf
 
 fn main() -> Result<()> {
     println!("Service Overview");
@@ -12,7 +20,7 @@ fn main() -> Result<()> {
         .filter_map(|entry| entry.ok())
         .map(|entry| entry.file_name())
         .collect();
-    let mut disabled: Vec<_> = fs::read_dir(SV_DIR)?
+    let mut disabled: Vec<_> = fs::read_dir(SVDIR)?
         .filter_map(|entry| entry.ok())
         .map(|entry| entry.file_name())
         .filter(|entry| !enabled.contains(entry))
