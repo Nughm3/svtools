@@ -51,7 +51,7 @@ fn main() -> Result<()> {
             "{}Failed to disable {errors} services",
             color::Fg(color::Red)
         );
-        exit(errors;
+        exit(errors);
     } else {
         println!(
             "{}Successfully disabled {} services",
