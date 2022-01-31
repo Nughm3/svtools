@@ -55,7 +55,7 @@ fn main() -> Result<()> {
             "{}Failed to enable {errors} services",
             color::Fg(color::Red)
         );
-        exit(1);
+        exit(errors);
     } else {
         println!(
             "{}Successfully enabled {} services",
