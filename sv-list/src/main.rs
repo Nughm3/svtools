@@ -2,8 +2,8 @@ use color_eyre::eyre::Result;
 use std::{fs, process::Command, str::from_utf8};
 use termion::color;
 
-const RUNSVDIR: &'static str = "/var/service/";
-const SV_DIR: &'static str = "/etc/sv/";
+const RUNSVDIR: &str = "/var/service/";
+const SV_DIR: &str = "/etc/sv/";
 
 fn main() -> Result<()> {
     println!("Service Overview");
@@ -64,7 +64,7 @@ fn fmt(input: &str) -> String {
             color::Fg(color::Reset)
         )
     } else {
-        let input: String = input.split(";").take(1).collect();
+        let input: String = input.split(';').take(1).collect();
 
         let status = if input.contains("run:") {
             format!("{}up", color::Fg(color::Green))
@@ -98,7 +98,7 @@ fn fmt(input: &str) -> String {
                     .last()
                     .expect("Will never fail")
                     .split_whitespace()
-                    .nth(0)
+                    .next()
                     .unwrap()
                     .replace(')', "")
             )

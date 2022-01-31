@@ -20,9 +20,9 @@ fn main() -> Result<()> {
 
     let mut errors = 0;
     for service in args.iter().skip(1) {
-        let s1 = SV_DIR.to_owned() + &service;
+        let s1 = SV_DIR.to_owned() + service;
         let svc = Path::new(&s1);
-        let s2 = RUNSVDIR.to_owned() + &service;
+        let s2 = RUNSVDIR.to_owned() + service;
         let dest = Path::new(&s2);
 
         if svc.exists() {
