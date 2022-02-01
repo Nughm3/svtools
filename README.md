@@ -1,7 +1,7 @@
 # void-svtools
 Basic wrappers for managing services for runit, just like `systemctl enable/disable <service>` or `rc-update add <service> <runlevel>`.
 
-You can edit the included SVDIR and RUNSVDIR files to change the service directories. They default to where Void Linux stores service files.
+If you are not on Void Linux make sure to change the constants RUNSVDIR and SVDIR in `sv-*/src/main.rs` files.
 
 - `sv-add`: symlink a service to runsvdir
 - `sv-del`: remove a service symlink in runsvdir

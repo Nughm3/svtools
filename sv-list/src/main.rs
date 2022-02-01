@@ -82,7 +82,7 @@ fn fmt(input: &str) -> String {
                 .expect("Will never fail")
         } else {
             input
-                .split_whitespace() // The last element will be the time
+                .split_whitespace()
                 .nth(2)
                 .expect("Will never fail")
                 .replace("s,", "")
