@@ -2,8 +2,8 @@ use color_eyre::eyre::Result;
 use std::{fs, process::Command, str::from_utf8};
 use termion::color;
 
-const RUNSVDIR: &str = "/var/service/";
-const SVDIR: &str = "/etc/sv/";
+const RUNSVDIR: &str = "/etc/runit/runsvdir/default/";
+const SVDIR: &str = "/etc/runit/sv/";
 
 fn main() -> Result<()> {
     println!("Service Overview");

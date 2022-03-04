@@ -7,8 +7,8 @@ use std::{
 };
 use termion::color;
 
-const SVDIR: &str = "/etc/sv/";
-const RUNSVDIR: &str = "/var/service/";
+const SVDIR: &str = "/etc/runit/sv/";
+const RUNSVDIR: &str = "/etc/runit/runsvdir/default/";
 
 fn main() -> Result<()> {
     let args: Vec<String> = args().collect();

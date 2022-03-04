@@ -7,7 +7,7 @@ use std::{
 };
 use termion::color;
 
-const RUNSVDIR: &str = "/var/service/";
+const RUNSVDIR: &str = "/etc/runit/runsvdir/default/";
 
 fn main() -> Result<()> {
     let args: Vec<String> = args().collect();
