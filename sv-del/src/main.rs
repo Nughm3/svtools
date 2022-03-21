@@ -1,3 +1,4 @@
+use colored::Colorize;
 use std::{
     env::args,
     fs,
@@ -5,7 +6,6 @@ use std::{
     path::Path,
     process::exit,
 };
-use termion::color;
 
 const RUNSVDIR: &str = "/var/service/";
 
@@ -24,42 +24,41 @@ fn main() -> Result<()> {
 
         if svc.exists() {
             if let Err(e) = fs::remove_file(svc) {
-                eprint!(
-                    "{}[Error] While disabling {service}: ",
-                    color::Fg(color::Red),
-                );
+                eprint!("{}", "[Error] While disabling {service}: ".red().bold());
                 match e.kind() {
-                    PermissionDenied => eprintln!("Access denied, try sudo?"),
+                    PermissionDenied => eprintln!("{}", "Access denied, try sudo?".red()),
                     _ => eprintln!("Unknown error: {:?}", e),
                 }
                 errors += 1;
             } else {
-                println!("{}Disabled service {service}", color::Fg(color::Green));
+                println!("{} {}", "Disabled service".green(), service.green().bold());
             }
         } else {
             eprintln!(
-                "{}[Error] Service {service} is already disabled",
-                color::Fg(color::Red),
+                "{} {}",
+                "Error: could not find service".red(),
+                service.red().bold()
             );
             errors += 1;
         }
-        print!("{}", color::Fg(color::Reset));
     }
 
     if errors != 0 {
         eprintln!(
-            "{}Failed to disable {errors} services",
-            color::Fg(color::Red)
+            "{} {} {}",
+            "Failed to disable".red(),
+            errors.to_string().red().bold(),
+            "services".red(),
         );
         exit(errors);
     } else {
         println!(
-            "{}Successfully disabled {} services",
-            color::Fg(color::Green),
-            args.len() - 1
+            "{} {} {}",
+            "Successfully disable".green(),
+            (args.len() - 1).to_string().green().bold(),
+            "services".green()
         );
     }
 
-    print!("{}", color::Fg(color::Reset));
     Ok(())
 }

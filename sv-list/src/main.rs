@@ -1,6 +1,6 @@
 use color_eyre::eyre::Result;
+use colored::Colorize;
 use std::{fs, process::Command, str::from_utf8};
-use termion::color;
 
 const RUNSVDIR: &str = "/var/service/";
 const SVDIR: &str = "/etc/sv/";
@@ -34,19 +34,17 @@ fn main() -> Result<()> {
             up += 1;
         }
 
-        println!("{}[*] {} {svc}", color::Fg(color::Green), status);
+        println!("{} {} {}", "[*]".green(), status, svc.green())
     }
 
-    print!("{}", color::Fg(color::Red));
     for svc in disabled
         .iter()
         .map(|x| x.to_str().expect("Failed to convert string"))
     {
-        println!("[ ] [ disabled ] {svc}");
+        println!("{} {}", "[ ] [ disabled ]".red(), svc.red());
     }
     println!(
-        "{}{}/{} enabled, {}/{} up",
-        color::Fg(color::Reset),
+        "{}/{} enabled, {}/{} up",
         enabled.len(),
         enabled.len() + disabled.len(),
         up,
@@ -58,18 +56,14 @@ fn main() -> Result<()> {
 
 fn fmt(input: &str) -> String {
     if input.contains("access denied") {
-        format!(
-            "{}[access denied]{}",
-            color::Fg(color::Red),
-            color::Fg(color::Reset)
-        )
+        format!("{}", "[access denied]".red(),)
     } else {
         let input: String = input.split(';').take(1).collect();
 
         let status = if input.contains("run:") {
-            format!("{}up", color::Fg(color::Green))
+            format!("{}", "up".green())
         } else {
-            format!("{}down", color::Fg(color::Red))
+            format!("{}", "down".red())
         };
 
         let time = secs_fmt(if status.contains("up") {
@@ -107,13 +101,13 @@ fn fmt(input: &str) -> String {
         };
 
         format!(
-            "{}[ {status} {}for {}{time}{} ]\t{}{pid}{}\t",
-            color::Fg(color::Yellow),
-            color::Fg(color::Reset),
-            color::Fg(color::Blue),
-            color::Fg(color::Yellow),
-            color::Fg(color::Red),
-            color::Fg(color::Reset)
+            "{} {} {} {} {} {}",
+            "[".yellow(),
+            status.yellow(),
+            "for".blue(),
+            time.blue(),
+            "]\t".yellow(),
+            pid.red()
         )
     }
 }

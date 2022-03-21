@@ -1,3 +1,4 @@
+use colored::Colorize;
 use std::{
     env::args,
     io::{ErrorKind::*, Result},
@@ -5,7 +6,6 @@ use std::{
     path::Path,
     process::exit,
 };
-use termion::color;
 
 const SVDIR: &str = "/etc/sv/";
 const RUNSVDIR: &str = "/var/service/";
@@ -27,43 +27,42 @@ fn main() -> Result<()> {
 
         if svc.exists() {
             if let Err(e) = symlink(svc, dest) {
-                eprint!(
-                    "{}[Error] While enabling {service}: ",
-                    color::Fg(color::Red)
-                );
+                eprint!("{}", "[Error] While enabling {service}: ".red().bold());
                 match e.kind() {
-                    AlreadyExists => eprintln!("Service is already enabled"),
-                    PermissionDenied => eprintln!("Access denied, try sudo?"),
+                    AlreadyExists => eprintln!("{}", "Service is already enabled".red()),
+                    PermissionDenied => eprintln!("{}", "Access denied, try sudo?".red()),
                     _ => eprintln!("Unknown error: {:?}", e),
                 }
                 errors += 1;
             } else {
-                println!("{}Enabled service {service}", color::Fg(color::Green));
+                println!("{} {}", "Enabled service".green(), service.green().bold());
             }
         } else {
             eprintln!(
-                "{}Error: could not find service {service}",
-                color::Fg(color::Red)
+                "{} {}",
+                "Error: could not find service".red(),
+                service.red().bold()
             );
             errors += 1;
         }
-        print!("{}", color::Fg(color::Reset));
     }
 
     if errors != 0 {
         eprintln!(
-            "{}Failed to enable {errors} services",
-            color::Fg(color::Red)
+            "{} {} {}",
+            "Failed to enable".red(),
+            errors.to_string().red().bold(),
+            "services".red(),
         );
         exit(errors);
     } else {
         println!(
-            "{}Successfully enabled {} services",
-            color::Fg(color::Green),
-            args.len() - 1
+            "{} {} {}",
+            "Successfully enabled".green(),
+            (args.len() - 1).to_string().green().bold(),
+            "services".green()
         );
     }
-    print!("{}", color::Fg(color::Reset));
 
     Ok(())
 }
