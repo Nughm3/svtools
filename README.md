@@ -1,4 +1,5 @@
 # svtools
+
 Basic wrappers for managing services for runit, just like `systemctl enable/disable <service>` or `rc-update add <service> <runlevel>`.
 
 If you are not on Void Linux make sure to change the constants RUNSVDIR and SVDIR in `sv-*/src/main.rs` files.
