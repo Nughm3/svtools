@@ -1,11 +1,16 @@
-use color_eyre::eyre::Result;
+use color_eyre::Result;
 use colored::Colorize;
-use std::{fs, process::Command, str::from_utf8};
+use std::{env, fs, process::Command, str::from_utf8};
 
 const RUNSVDIR: &str = "/var/service/";
 const SVDIR: &str = "/etc/sv/";
 
 fn main() -> Result<()> {
+    if env::var("RUST_LIB_BACKTRACE").is_err() {
+        env::set_var("RUST_LIB_BACKTRACE", "1");
+    }
+    color_eyre::install()?;
+
     println!("Service Overview");
 
     let mut enabled: Vec<_> = fs::read_dir(RUNSVDIR)?
