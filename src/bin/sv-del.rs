@@ -23,11 +23,12 @@ fn main() -> Result<()> {
 
         if svc.exists() {
             if let Err(e) = fs::remove_file(svc) {
-                eprint!("{}", "[Error] While disabling {service}: ".red().bold());
-                match e.kind() {
-                    PermissionDenied => eprintln!("{}", "Access denied, try sudo?".red()),
-                    _ => eprintln!("Unknown error: {:?}", e),
-                }
+                eprint!(
+                    "{} {}",
+                    "[Error] While disabling {service}: ".red().bold(),
+                    e.to_string().red()
+                );
+
                 errors += 1;
             } else {
                 println!("{} {}", "Disabled service".green(), service.green().bold());
