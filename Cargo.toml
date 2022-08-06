@@ -1,2 +1,7 @@
-[workspace]
-members = ["sv-add", "sv-del", "sv-list"]
+[package]
+name = "svtools"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+colored = "2.0.0"

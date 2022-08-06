@@ -1,4 +1,10 @@
+//! Basic service management wrappers for `runit`
+//! Designed for use on Void Linux
+
 use colored::Colorize;
+
+pub const SVDIR: &str = "/etc/sv/";
+pub const RUNSVDIR: &str = "/var/service/";
 
 pub fn fmt(input: &str) -> String {
     if input.contains("access denied") {

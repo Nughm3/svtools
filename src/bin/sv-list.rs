@@ -1,8 +1,6 @@
 use colored::Colorize;
 use std::{error::Error, fs, process::Command, str::from_utf8};
-
-const RUNSVDIR: &str = "/var/service/";
-const SVDIR: &str = "/etc/sv/";
+use svtools::{fmt, RUNSVDIR, SVDIR};
 
 fn main() -> Result<(), Box<dyn Error>> {
     println!("Service Overview");
@@ -27,7 +25,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         .map(|x| x.to_str().expect("Failed to convert string"))
     {
         let status = Command::new("sv").arg("status").arg(svc).output()?;
-        let status = sv_list::fmt(from_utf8(&status.stdout)?.trim_end());
+        let status = fmt(from_utf8(&status.stdout)?.trim_end());
 
         if status.contains("up") {
             up += 1;
